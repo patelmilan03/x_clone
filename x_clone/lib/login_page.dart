@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:x_clone/home.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -8,6 +9,9 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  String email = "";
+  String password = "";
   bool passwordObscure = true;
   @override
   Widget build(BuildContext context) {
@@ -19,6 +23,7 @@ class _LoginPageState extends State<LoginPage> {
       body: Padding(
         padding: EdgeInsetsGeometry.all(10),
         child: Form(
+          key: _formKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -37,6 +42,13 @@ class _LoginPageState extends State<LoginPage> {
                     borderSide: BorderSide(color: Colors.blue),
                   ),
                 ),
+                validator: (String? value) {
+                  if (value == null || value.isEmpty) {
+                    return "Please enter the email";
+                  }
+                  return null;
+                },
+                onSaved: (value) => email = value ?? '',
               ),
               const SizedBox(height: 10.0),
               TextFormField(
@@ -62,6 +74,16 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                 ),
+                validator: (String? value) {
+                  if (value == null || value.isEmpty) {
+                    return "password cannot be empty";
+                  }
+                  if (value.length < 8) {
+                    return "password has to be at least 8 digits";
+                  }
+                  return null;
+                },
+                onSaved: (value) => password = value ?? '',
                 obscureText: passwordObscure,
               ),
               const Spacer(),
@@ -71,7 +93,15 @@ class _LoginPageState extends State<LoginPage> {
                   horizontal: 20,
                 ),
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      _formKey.currentState!.save();
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => const Home()),
+                      );
+                    }
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.white,
                     foregroundColor: Colors.black,
