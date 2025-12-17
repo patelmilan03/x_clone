@@ -43,6 +43,36 @@ class Home extends StatelessWidget {
             const Text('Subscribed Tab'),
           ],
         ),
+        bottomNavigationBar: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
+          selectedItemColor: Colors.white,
+          iconSize: 36.0,
+          items: const [
+            BottomNavigationBarItem(icon: Icon(Icons.home), label: ''),
+            BottomNavigationBarItem(icon: Icon(Icons.search), label: ''),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.people_outline),
+              label: '',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.notifications_none_outlined),
+              label: '',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.mail_outline_outlined),
+              label: '',
+            ),
+          ],
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            // setState() {}
+          },
+          foregroundColor: Colors.white,
+          backgroundColor: Colors.blue,
+          shape: CircleBorder(),
+          child: const Icon(Icons.add),
+        ),
       ),
     );
   }
@@ -80,8 +110,17 @@ class PostEntry extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(post.name),
-                      Icon(post.verified == true ? Icons.verified : null),
+                      const SizedBox(width: 1),
+
+                      if (post.verified == true)
+                        const Icon(
+                          Icons.verified,
+                          size: 16,
+                          color: Colors.blue,
+                        ),
+                      const SizedBox(width: 5),
                       Text(post.handle),
+                      const SizedBox(width: 5),
                       const Icon(
                         Icons.circle,
                         size: 5.0, // Make it tiny
@@ -99,9 +138,10 @@ class PostEntry extends StatelessWidget {
                   // ),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Icon(Icons.comment),
                           const SizedBox(width: 2),
@@ -110,6 +150,7 @@ class PostEntry extends StatelessWidget {
                       ),
                       const SizedBox(width: 10),
                       Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Icon(Icons.repeat),
                           const SizedBox(width: 2),
@@ -118,6 +159,7 @@ class PostEntry extends StatelessWidget {
                       ),
                       const SizedBox(width: 10),
                       Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Icon(Icons.favorite_border),
                           const SizedBox(width: 2),
